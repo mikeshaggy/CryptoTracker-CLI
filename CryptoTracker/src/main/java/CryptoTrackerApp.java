@@ -10,9 +10,12 @@ public class CryptoTrackerApp {
 
         cryptoWallet.listTransactions();
 
-        cryptoWallet.summarizeCurrencies();
 
-        System.out.println(cryptoWallet.getCoinsQuantity());
+        CryptoWalletSerializer.serializeWallet(cryptoWallet, "src/data/wallet.ser");
+
+//        CryptoWallet wallet = CryptoWalletSerializer.deserializeWallet("wallet.ser");
+//
+//        wallet.listTransactions();
     }
     private static List<CryptoTransaction> generateRandomList() {
         Random random = new Random();

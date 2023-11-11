@@ -1,6 +1,7 @@
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CryptoTransaction {
+public class CryptoTransaction implements Serializable {
     private String cryptoName;
     private LocalDate purchaseDate;
     private double price;
