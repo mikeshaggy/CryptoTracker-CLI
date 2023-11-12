@@ -1,13 +1,13 @@
 import java.io.Serializable;
 import java.time.LocalDate;
 
-public class CryptoTransaction implements Serializable {
+public class Trade implements Serializable {
     private String cryptoName;
     private LocalDate purchaseDate;
     private double price;
     private double quantity;
 
-    public CryptoTransaction(String cryptoName, double price, double quantity) {
+    public Trade(String cryptoName, double price, double quantity) {
         this.cryptoName = cryptoName;
         this.price = price;
         this.purchaseDate = LocalDate.now();
