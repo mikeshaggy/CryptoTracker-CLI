@@ -12,7 +12,7 @@ import java.net.URL;
 public class CoinAPI {
     private static final String API_KEY = "463013E2-04A2-47F2-800B-6E05DFD22033";
 
-    private static String getCoinData(String coinName) {
+    public static String getCoinData(String coinName) {
         StringBuffer sb = new StringBuffer();
 
         try {
@@ -31,16 +31,14 @@ public class CoinAPI {
             connection.disconnect();
         } catch (MalformedURLException e) {
             System.out.println("Caught MalformedURLException");
-            e.printStackTrace();
         } catch (IOException e) {
             System.out.println("Caught IOException");
-            e.printStackTrace();
         }
 
         return sb.toString();
     }
 
-    public static double getCoinExchangeRate(String coinName) {
+    public static double getCoinExchangeRate(String coinName) throws Exception {
         String coinData = getCoinData(coinName);
 
         double exchangeRate = 0;
@@ -51,7 +49,6 @@ public class CoinAPI {
             exchangeRate = round(jsonNode.get("rate").asDouble(), 2);
         } catch (JsonProcessingException e) {
             System.out.println("Caught JsonProcessingException");
-            e.printStackTrace();
         }
 
         return exchangeRate;
