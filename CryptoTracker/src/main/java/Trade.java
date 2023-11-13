@@ -1,16 +1,18 @@
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Trade implements Serializable {
     private String cryptoName;
-    private LocalDate purchaseDate;
+    private LocalDateTime purchaseDate;
     private double price;
     private double quantity;
+    private transient DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public Trade(String cryptoName, double price, double quantity) {
         this.cryptoName = cryptoName;
         this.price = price;
-        this.purchaseDate = LocalDate.now();
+        this.purchaseDate = LocalDateTime.now();
         this.quantity = quantity;
 
     }
@@ -19,7 +21,7 @@ public class Trade implements Serializable {
         return cryptoName;
     }
 
-    public LocalDate getPurchaseDate() {
+    public LocalDateTime getPurchaseDate() {
         return purchaseDate;
     }
 
@@ -31,9 +33,13 @@ public class Trade implements Serializable {
         return quantity;
     }
 
+    private double calculateValue() {
+        return quantity * price;
+    }
 
     @Override
     public String toString() {
-        return "date: %s | name: %s | price: %.2f | qty: %.9f".formatted(purchaseDate.toString(), cryptoName, price, quantity);
+        return "name: %s | quantity: %.9f | value: %.2f$ | price for %s - %.2f$"
+        .formatted(cryptoName, quantity, calculateValue(), purchaseDate.format(dateTimeFormatter), price);
     }
 }
