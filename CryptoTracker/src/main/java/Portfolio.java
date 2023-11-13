@@ -14,7 +14,7 @@ public class Portfolio implements Serializable {
         this.name = name;
     }
 
-    public void addTransaction(Trade trade) {
+    public void addTrade(Trade trade) {
         trades.add(trade);
         investedAmount += trade.getPrice();
         String coinName = trade.getCryptoName();
@@ -26,14 +26,14 @@ public class Portfolio implements Serializable {
         }
     }
 
-    public void listTransactions() {
+    public void printTradeList() {
         if (!trades.isEmpty()) {
             for (Trade trade : trades) {
                 System.out.println(trade);
             }
             return;
         }
-        System.out.println("Transactions list is empty");
+        System.out.println("Trade list is empty");
     }
 
     public Map<String, Double> getCoinsQuantity() {
