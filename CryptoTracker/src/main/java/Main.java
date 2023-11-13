@@ -2,8 +2,7 @@ public class Main {
     public static void main(String[] args) {
         App app = new App();
 
-        app.printTitle();
-        app.selectPortfolio();
-        app.managePortfolio();
+        app.launch();
+
     }
 }
