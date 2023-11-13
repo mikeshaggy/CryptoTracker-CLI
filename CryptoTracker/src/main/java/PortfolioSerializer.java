@@ -15,8 +15,6 @@ public class PortfolioSerializer {
         FileInputStream file = new FileInputStream(String.format("src/data/%s", portfolioName));
         ObjectInputStream in = new ObjectInputStream(file);
 
-        Portfolio portfolio = (Portfolio) in.readObject();
-
-        return portfolio;
+        return (Portfolio) in.readObject();
     }
 }
