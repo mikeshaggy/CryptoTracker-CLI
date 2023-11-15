@@ -7,8 +7,8 @@ import java.nio.file.Paths;
 import java.util.Objects;
 import java.util.Scanner;
 
-// selecting and deleting portfolios from a list, not by name
-// printing current portfolio content with its value
+// TODO selecting and deleting portfolios from a list, not by name
+// TODO printing current portfolio content with its value
 
 public class App {
     private Portfolio selectedPortfolio;
