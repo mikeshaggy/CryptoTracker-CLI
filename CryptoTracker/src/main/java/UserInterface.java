@@ -1,5 +1,4 @@
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
 
@@ -119,9 +118,39 @@ public class UserInterface {
 
     public void printPortfolioMenu() {
         System.out.println("1. Add new trade");
-        System.out.println("2. Show all trades");
-        System.out.println("3. Show portfolio content");
-        System.out.println("4. Main menu");
-        System.out.println("5. Exit");
+        System.out.println("2. Delete trade");
+        System.out.println("3. Show all trades");
+        System.out.println("4. Show portfolio content");
+        System.out.println("5. Main menu");
+        System.out.println("6. Exit");
+    }
+
+    public Trade getTradeFromUser() {
+        Trade userTrade = null;
+        System.out.println("Enter coin name");
+        String coinName = getUserInput().toUpperCase();
+        try {
+            double price = CoinAPI.getCoinExchangeRate(coinName);
+            System.out.println("Enter amount of coin you bought");
+            double coinQuantity = Double.parseDouble(getUserInput());
+            System.out.printf("""
+                    Trade you're about to add:
+                    Coin name: %s
+                    Coin quantity: %.9f
+                    1. Accept
+                    2. Cancel
+                    """, coinName, coinQuantity);
+            String userConfirmation = getUserInput();
+            if (userConfirmation.equals("1")) {
+                userTrade = new Trade(coinName, price, coinQuantity);
+                System.out.println("Trade added successfully");
+            } else {
+                System.out.println("Trade has not been added");
+            }
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
+
+        return userTrade;
     }
 }

@@ -17,7 +17,7 @@ public class Portfolio implements Serializable {
     public void addTrade(Trade trade) {
         trades.add(trade);
         investedAmount += trade.getPrice();
-        String coinName = trade.getCryptoName();
+        String coinName = trade.getCoinName();
         double coinQuantity = trade.getQuantity();
         if (coinsQuantity.containsKey(coinName)) {
             coinsQuantity.put(coinName, coinsQuantity.get(coinName) + coinQuantity);
