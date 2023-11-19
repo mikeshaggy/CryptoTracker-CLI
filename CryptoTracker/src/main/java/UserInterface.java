@@ -43,7 +43,7 @@ public class UserInterface {
     public void printPortfoliosList() {
         File[] portfolios = fileManager.getPortfolios();
 
-        if (portfolios != null) {
+        if (portfolios != null && portfolios.length > 0) {
             for (int i = 0; i < portfolios.length; i++) {
                 System.out.printf("%d. %s%n", i+1, portfolios[i].getName());
             }

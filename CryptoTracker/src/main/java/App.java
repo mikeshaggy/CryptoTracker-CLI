@@ -45,9 +45,15 @@ public class App {
         ui.printPortfolioMenu();
         String userChoice = ui.getUserInput();
         switch (userChoice) {
-            case "1" -> System.out.println("Adding new trade not implemented yet");
+            case "1" -> {
+                System.out.println("Adding new trade not implemented yet");
+                portfolioMenu();
+            }
             case "2" -> selectedPortfolio.printTradeList();
-            case "3" -> System.out.println("unimplemented");
+            case "3" -> {
+                System.out.println("unimplemented");
+                portfolioMenu();
+            }
             case "4" -> {
                 portfolioManager.setSelectedPortfolio(null);
                 mainMenu();
