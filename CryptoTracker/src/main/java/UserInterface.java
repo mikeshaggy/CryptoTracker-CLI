@@ -7,7 +7,7 @@ public class UserInterface {
 //    anything that has to do with user, menus, getting inputs etc
     private final int LINE_WIDTH = 60;
     static Scanner sc = new Scanner(System.in);
-    private FileManager fileManager;
+    private final FileManager fileManager;
 
     public UserInterface() {
         this.fileManager = new FileManager();
