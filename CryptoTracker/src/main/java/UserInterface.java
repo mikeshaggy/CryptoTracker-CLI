@@ -120,7 +120,7 @@ public class UserInterface {
         System.out.println("1. Add new trade");
         System.out.println("2. Delete trade");
         System.out.println("3. Show all trades");
-        System.out.println("4. Show portfolio content");
+        System.out.println("4. Show portfolio details");
         System.out.println("5. Main menu");
         System.out.println("6. Exit");
     }
@@ -152,5 +152,13 @@ public class UserInterface {
         }
 
         return userTrade;
+    }
+
+    public void updatePortfolio(Portfolio portfolio) {
+        try {
+            fileManager.serializePortfolio(portfolio);
+        } catch (Exception e) {
+            System.out.println("Something went wrong");
+        }
     }
 }
