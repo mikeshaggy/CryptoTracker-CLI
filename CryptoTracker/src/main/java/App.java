@@ -10,26 +10,24 @@ public class App {
 
     private void mainMenu() {
         boolean exit = false;
-        ui.printMainMenu();
         do {
+            ui.printMainMenu();
             String userChoice = ui.getUserInput();
             switch (userChoice) {
                 case "1" -> {
                     ui.printPortfoliosList();
-                    mainMenu();
                 }
                 case "2" -> {
-                    this.selectedPortfolio = ui.portfolioSelecting();
+                    this.selectedPortfolio = ui.portfolioSelecting(); //TODO Exception to catch - 2 & test inputted by user
+                    exit = true;
                     portfolioMenu();
                 }
                 case "3" ->  {
                     ui.creatingNewPortfolio();
-                    mainMenu();
                 }
                 case "4" -> {
                     ui.deletingPortfolio();
                     selectedPortfolio = null;
-                    mainMenu();
                 }
                 case "5" -> {
                     System.out.println("Closing app...");
@@ -41,37 +39,38 @@ public class App {
     }
 
     private void portfolioMenu() {
-        System.out.println("Currently selected portfolio -> " + selectedPortfolio.getName());
-        ui.printPortfolioMenu();
-        String userChoice = ui.getUserInput();
-        switch (userChoice) {
-            case "1" -> {
-                Trade tradeToAdd = ui.getTradeFromUser();
-                if (tradeToAdd != null) {
-                    selectedPortfolio.addTrade(tradeToAdd);
+        boolean exit = false;
+        do {
+            ui.printLineSeparator();
+            System.out.println("Currently selected portfolio -> " + selectedPortfolio.getName());
+            ui.printPortfolioMenu();
+            String userChoice = ui.getUserInput();
+            switch (userChoice) {
+                case "1" -> {
+                    Trade tradeToAdd = ui.getTradeFromUser();
+                    if (tradeToAdd != null) {
+                        selectedPortfolio.addTrade(tradeToAdd);
+                    }
+                    ui.updatePortfolio(selectedPortfolio);
                 }
-                portfolioMenu();
+                case "2" -> System.out.println("Deleting trade not implemented yet");
+                case "3" -> selectedPortfolio.printTradeList();
+                case "4" -> selectedPortfolio.getDetails();
+                case "5" -> {
+                    selectedPortfolio = null;
+                    exit = true;
+                    mainMenu();
+                }
+                case "6" -> {
+                    System.out.println("Closing app...");
+                    exit = true;
+                }
+                default -> {
+                    System.out.println("Invalid option. Please try again");
+                    ui.printLineSeparator();
+                }
             }
-            case "2" -> System.out.println("Deleting trade not implemented yet");
-            case "3" -> selectedPortfolio.printTradeList();
-            case "4" -> {
-                System.out.println("unimplemented");
-                portfolioMenu();
-            }
-            case "5" -> {
-                selectedPortfolio = null;
-                mainMenu();
-            }
-            case "6" -> {
-                System.out.println("Closing app...");
-                System.exit(0);
-            }
-            default -> {
-                System.out.println("Invalid option. Please try again");
-                ui.printLineSeparator();
-                portfolioMenu();
-            }
-        }
+        } while (!exit);
     }
 
     public void launch() {
