@@ -38,7 +38,7 @@ public class CoinAPI {
         return sb.toString();
     }
 
-    public static double getCoinExchangeRate(String coinName) throws Exception {
+    public static double getCoinExchangeRate(String coinName) {
         String coinData = getCoinData(coinName);
 
         double exchangeRate = 0;
