@@ -7,7 +7,6 @@ public class Trade implements Serializable {
     private final LocalDateTime purchaseDate;
     private final double price;
     private final double quantity;
-    private final transient DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public Trade(String coinName, double price, double quantity) {
         this.coinName = coinName;
@@ -38,7 +37,8 @@ public class Trade implements Serializable {
 
     @Override
     public String toString() {
-        return "name: %s | quantity: %.9f | value: %.2f$ | price for %s - %.2f$"
-        .formatted(coinName, quantity, calculateValue(), purchaseDate.format(dateTimeFormatter), price);
+        DateTimeFormatter dateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        return "name: %s | quantity: %.9f | value: %.2f$ | price for 1 %s at %s -> %.2f$"
+        .formatted(coinName, quantity, calculateValue(), coinName, purchaseDate.format(dateTimeFormatter), price);
     }
 }
