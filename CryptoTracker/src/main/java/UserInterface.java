@@ -3,7 +3,6 @@ import java.nio.file.NoSuchFileException;
 import java.util.Scanner;
 
 public class UserInterface {
-//    anything that has to do with user, menus, getting inputs etc
     private final int LINE_WIDTH = 60;
     static Scanner sc = new Scanner(System.in);
     private final FileManager fileManager;
@@ -60,7 +59,7 @@ public class UserInterface {
         try {
             selectedPortfolio = fileManager.deserializePortfolio(portfolioName);
         } catch (Exception e) {
-            System.out.printf("ERROR: Failed to load portfolio \"%s\"", portfolioName);
+            System.out.printf("ERROR: Failed to load portfolio \"%s\"%n", portfolioName);
         }
 
         return selectedPortfolio;
@@ -152,6 +151,27 @@ public class UserInterface {
         }
 
         return userTrade;
+    }
+
+    public void deleteTrade(Portfolio portfolio) {
+        System.out.println("Enter trade ID");
+        try {
+            int id = Integer.parseInt(getUserInput());
+            Trade tradeToDelete = portfolio.getTradeById(id);
+            System.out.printf("""
+                    Trade you're about to delete:
+                    %s
+                    Once deleted, it cannot be recovered!
+                    Enter [yes] to delete
+                    """, tradeToDelete.toString());
+            String userConfirmation = getUserInput();
+            if (userConfirmation.equals("yes")) {
+                portfolio.deleteTrade(tradeToDelete);
+                System.out.println("Trade has been deleted");
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("ERROR: Wrong trade ID");
+        }
     }
 
     public void updatePortfolio(Portfolio portfolio) {
