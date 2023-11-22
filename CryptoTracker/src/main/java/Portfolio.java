@@ -100,6 +100,7 @@ public class Portfolio implements Serializable {
             content.compute(coinName, (k, currentQuantity) -> currentQuantity - coinQuantity);
         }
         trades.remove(trade);
+        investedAmount -= trade.getPrice() * trade.getQuantity();
     }
 
     private int getCoinOccurences(String coinName) {
