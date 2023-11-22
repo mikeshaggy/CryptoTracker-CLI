@@ -28,8 +28,8 @@ public class Portfolio implements Serializable {
 
     public void printTradeList() {
         if (!trades.isEmpty()) {
-            for (Trade trade : trades) {
-                System.out.println(trade);
+            for (int i = 0; i < trades.size(); i++) {
+                System.out.printf("ID: %d | %s%n", i+1, trades.get(i));
             }
             return;
         }
@@ -72,9 +72,46 @@ public class Portfolio implements Serializable {
 
         getContent();
         System.out.println("-".repeat(60));
-        System.out.printf("Invested amount: " + investedAmount + "$");
+        System.out.printf("Invested amount: %.2f$%n", investedAmount);
         System.out.printf("Total portfolio value: %.2f$%n", getValue());
         System.out.printf("%s: %.2f%%%n", result, profit);
+    }
+
+    public Trade getTradeById(int id) {
+        Trade tradeToReturn = null;
+
+        try {
+            tradeToReturn = trades.get(id - 1);
+            return tradeToReturn;
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("ERROR: Wrong trade ID");
+        }
+
+        return tradeToReturn;
+    }
+
+    public void deleteTrade(Trade trade) {
+        String coinName = trade.getCoinName();
+        int coinCount = getCoinOccurences(coinName);
+        if (coinCount == 1) {
+            content.remove(trade.getCoinName());
+        } else if (coinCount > 1) {
+            double coinQuantity = trade.getQuantity();
+            content.compute(coinName, (k, currentQuantity) -> currentQuantity - coinQuantity);
+        }
+        trades.remove(trade);
+    }
+
+    private int getCoinOccurences(String coinName) {
+        coinName = coinName.toUpperCase();
+        int result = 0;
+        for (Trade trade : trades) {
+            if (trade.getCoinName().equals(coinName)) {
+                result++;
+            }
+        }
+
+        return result;
     }
 
     public String getName() {
