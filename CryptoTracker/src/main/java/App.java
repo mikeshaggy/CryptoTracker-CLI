@@ -1,5 +1,3 @@
-// TODO printing current portfolio content with its value
-
 public class App {
     private final UserInterface ui;
     private Portfolio selectedPortfolio;
@@ -18,9 +16,11 @@ public class App {
                     ui.printPortfoliosList();
                 }
                 case "2" -> {
-                    this.selectedPortfolio = ui.portfolioSelecting(); //TODO Exception to catch - 2 & test inputted by user
-                    exit = true;
-                    portfolioMenu();
+                    selectedPortfolio = ui.portfolioSelecting();
+                    if (selectedPortfolio != null) {
+                        exit = true;
+                        portfolioMenu();
+                    }
                 }
                 case "3" ->  {
                     ui.creatingNewPortfolio();
@@ -53,7 +53,9 @@ public class App {
                     }
                     ui.updatePortfolio(selectedPortfolio);
                 }
-                case "2" -> System.out.println("Deleting trade not implemented yet");
+                case "2" -> {
+                    ui.deleteTrade(selectedPortfolio);
+                }
                 case "3" -> selectedPortfolio.printTradeList();
                 case "4" -> selectedPortfolio.getDetails();
                 case "5" -> {
