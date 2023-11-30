@@ -1,3 +1,8 @@
+package app;
+
+import app.ui.UserInterface;
+import app.model.*;
+
 public class App {
     private final UserInterface ui;
     private Portfolio selectedPortfolio;
@@ -12,9 +17,7 @@ public class App {
             ui.printMainMenu();
             String userChoice = ui.getUserInput();
             switch (userChoice) {
-                case "1" -> {
-                    ui.printPortfoliosList();
-                }
+                case "1" -> ui.printPortfoliosList();
                 case "2" -> {
                     selectedPortfolio = ui.portfolioSelecting();
                     if (selectedPortfolio != null) {
@@ -22,9 +25,7 @@ public class App {
                         portfolioMenu();
                     }
                 }
-                case "3" ->  {
-                    ui.creatingNewPortfolio();
-                }
+                case "3" -> ui.creatingNewPortfolio();
                 case "4" -> {
                     ui.deletingPortfolio();
                     selectedPortfolio = null;

@@ -1,6 +1,6 @@
+package app.model;
+
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class Trade implements Serializable {
     private final String coinName;

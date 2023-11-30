@@ -1,3 +1,6 @@
+package app.model;
+
+import app.CoinAPI;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -5,9 +8,9 @@ import java.util.List;
 import java.util.Map;
 
 public class Portfolio implements Serializable {
-    private String name;
-    private List<Trade> trades = new ArrayList<>();
-    private Map<String, Double> content = new HashMap<>();
+    private final String name;
+    private final List<Trade> trades = new ArrayList<>();
+    private final Map<String, Double> content = new HashMap<>();
     private double investedAmount;
 
     public Portfolio(String name) {
@@ -33,7 +36,7 @@ public class Portfolio implements Serializable {
             }
             return;
         }
-        System.out.println("Trade list is empty");
+        System.out.println("app.model.Trade list is empty");
     }
 
     private void getContent() {
@@ -68,7 +71,7 @@ public class Portfolio implements Serializable {
     public void getDetails() {
 
         if (trades.isEmpty()) {
-            System.out.println("Portfolio is empty!");
+            System.out.println("app.model.Portfolio is empty!");
             return;
         }
         double profit = getProfit();
@@ -97,7 +100,7 @@ public class Portfolio implements Serializable {
 
     public void deleteTrade(Trade trade) {
         String coinName = trade.getCoinName();
-        int coinCount = getCoinOccurences(coinName);
+        int coinCount = getCoinOccurrences(coinName);
         if (coinCount == 1) {
             content.remove(trade.getCoinName());
         } else if (coinCount > 1) {
@@ -108,7 +111,7 @@ public class Portfolio implements Serializable {
         investedAmount -= trade.getPrice() * trade.getQuantity();
     }
 
-    private int getCoinOccurences(String coinName) {
+    private int getCoinOccurrences(String coinName) {
         coinName = coinName.toUpperCase();
         int result = 0;
         for (Trade trade : trades) {
