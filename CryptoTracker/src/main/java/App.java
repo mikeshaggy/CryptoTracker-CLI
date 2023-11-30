@@ -55,6 +55,7 @@ public class App {
                 }
                 case "2" -> {
                     ui.deleteTrade(selectedPortfolio);
+                    ui.updatePortfolio(selectedPortfolio);
                 }
                 case "3" -> selectedPortfolio.printTradeList();
                 case "4" -> selectedPortfolio.getDetails();
