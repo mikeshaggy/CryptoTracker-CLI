@@ -102,7 +102,7 @@ public class UserInterface {
     public void deletingPortfolio() {
         System.out.println("Enter portfolio name");
         String portfolioName = getUserInput();
-        System.out.printf("Are you sure you want to delete \"%s\"?%nOnce deleted, it cannot be recovered!%nEnter [%s] to delete %n", portfolioName, portfolioName);
+        System.out.printf("Are you sure you want to delete \"%s\"?%nOnce deleted, it cannot be recovered!%nEnter [%s] to confirm %n", portfolioName, portfolioName);
         String userConfirmation = getUserInput();
         if (!userConfirmation.equals(portfolioName)) return;
         try {
@@ -129,19 +129,21 @@ public class UserInterface {
         System.out.println("Enter coin name");
         String coinName = getUserInput().toUpperCase();
         try {
-            double price = CoinAPI.getCoinExchangeRate(coinName);
             System.out.println("Enter amount of coin you bought");
             double coinQuantity = Double.parseDouble(getUserInput());
+            System.out.println("Enter current price of the coin you bought");
+            double coinPrice = Double.parseDouble(getUserInput());
             System.out.printf("""
                     Trade you're about to add:
                     Coin name: %s
                     Coin quantity: %.9f
+                    Coin price: %.2f
                     1. Accept
                     2. Cancel
-                    """, coinName, coinQuantity);
+                    """, coinName, coinQuantity, coinPrice);
             String userConfirmation = getUserInput();
             if (userConfirmation.equals("1")) {
-                userTrade = new Trade(coinName, price, coinQuantity);
+                userTrade = new Trade(coinName, coinPrice, coinQuantity);
                 System.out.println("Trade added successfully");
             } else {
                 System.out.println("Trade has not been added");
@@ -162,7 +164,7 @@ public class UserInterface {
                     Trade you're about to delete:
                     %s
                     Once deleted, it cannot be recovered!
-                    Enter [yes] to delete
+                    Enter [yes] to confirm
                     """, tradeToDelete.toString());
             String userConfirmation = getUserInput();
             if (userConfirmation.equals("yes")) {

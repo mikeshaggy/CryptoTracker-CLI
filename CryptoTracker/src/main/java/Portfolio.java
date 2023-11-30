@@ -18,7 +18,7 @@ public class Portfolio implements Serializable {
         trades.add(trade);
         String coinName = trade.getCoinName();
         double coinQuantity = trade.getQuantity();
-        investedAmount += trade.getPrice() * coinQuantity;
+        investedAmount += trade.getValue();
         if (content.containsKey(coinName)) {
             content.put(coinName, content.get(coinName) + coinQuantity);
         } else {
@@ -66,6 +66,11 @@ public class Portfolio implements Serializable {
     }
 
     public void getDetails() {
+
+        if (trades.isEmpty()) {
+            System.out.println("Portfolio is empty!");
+            return;
+        }
         double profit = getProfit();
 
         String result = profit >= 0 ? "Gain" : "Loss";
