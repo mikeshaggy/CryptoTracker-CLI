@@ -5,7 +5,6 @@ target/
 src/data/
 .idea/
 ../.idea/
-../.DS_Store
 
 ### IntelliJ IDEA ###
 .idea/modules.xml
