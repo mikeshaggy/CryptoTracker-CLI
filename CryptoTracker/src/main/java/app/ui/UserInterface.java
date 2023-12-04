@@ -20,7 +20,7 @@ public class UserInterface {
     }
 
     public void printTitle() {
-        String title = "Crypto Tracker app.App";
+        String title = "Crypto Tracker App";
         int titlePadding = (LINE_WIDTH - title.length()) / 2;
         System.out.println(" ".repeat(titlePadding) + title);
         printLineSeparator();
@@ -72,7 +72,7 @@ public class UserInterface {
     public boolean confirmOverwritingPortfolio(String portfolioName) {
         boolean result;
 
-        System.out.printf("app.model.Portfolio \"%s\" already exists. Do you want to overwrite it? [y/n]%n", portfolioName);
+        System.out.printf("Portfolio \"%s\" already exists. Do you want to overwrite it? [y/n]%n", portfolioName);
         char userChoice = getUserInput().toLowerCase().charAt(0);
 
         switch (userChoice) {
@@ -111,9 +111,9 @@ public class UserInterface {
         if (!userConfirmation.equals(portfolioName)) return;
         try {
             fileManager.deletePortfolio(portfolioName);
-            System.out.println("app.model.Portfolio deleted successfully");
+            System.out.println("Portfolio deleted successfully");
         } catch (NoSuchFileException e) {
-            System.out.printf("ERROR: app.model.Portfolio \"%s\" not found%n", portfolioName);
+            System.out.printf("ERROR: Portfolio \"%s\" not found%n", portfolioName);
         } catch (Exception e) {
             System.out.println("ERROR: Something went wrong");
         }
@@ -124,7 +124,7 @@ public class UserInterface {
         System.out.println("2. Delete trade");
         System.out.println("3. Show all trades");
         System.out.println("4. Show portfolio details");
-        System.out.println("5. app.Main menu");
+        System.out.println("5. Main menu");
         System.out.println("6. Exit");
     }
 
@@ -138,7 +138,7 @@ public class UserInterface {
             System.out.println("Enter current price of the coin you bought");
             double coinPrice = Double.parseDouble(getUserInput());
             System.out.printf("""
-                    app.model.Trade you're about to add:
+                    Trade you're about to add:
                     Coin name: %s
                     Coin quantity: %.9f
                     Coin price: %.2f
@@ -148,9 +148,9 @@ public class UserInterface {
             String userConfirmation = getUserInput();
             if (userConfirmation.equals("1")) {
                 userTrade = new Trade(coinName, coinPrice, coinQuantity);
-                System.out.println("app.model.Trade added successfully");
+                System.out.println("Trade added successfully");
             } else {
-                System.out.println("app.model.Trade has not been added");
+                System.out.println("Trade has not been added");
             }
         } catch (Exception e) {
             System.out.println("Something went wrong");
@@ -165,7 +165,7 @@ public class UserInterface {
             int id = Integer.parseInt(getUserInput());
             Trade tradeToDelete = portfolio.getTradeById(id);
             System.out.printf("""
-                    app.model.Trade you're about to delete:
+                    Trade you're about to delete:
                     %s
                     Once deleted, it cannot be recovered!
                     Enter [yes] to confirm
@@ -173,7 +173,7 @@ public class UserInterface {
             String userConfirmation = getUserInput();
             if (userConfirmation.equals("yes")) {
                 portfolio.deleteTrade(tradeToDelete);
-                System.out.println("app.model.Trade has been deleted");
+                System.out.println("Trade has been deleted");
             }
         } catch (NumberFormatException e) {
             System.out.println("ERROR: Wrong trade ID");

@@ -62,7 +62,7 @@ public class Portfolio implements Serializable {
         return value;
     }
 
-    private double getProfit() {
+    private double getPercentageChange() {
         double currentValue = getValue();
 
         return ((currentValue - investedAmount) / investedAmount) * 100;
@@ -71,18 +71,19 @@ public class Portfolio implements Serializable {
     public void getDetails() {
 
         if (trades.isEmpty()) {
-            System.out.println("app.model.Portfolio is empty!");
+            System.out.println("Portfolio is empty!");
             return;
         }
-        double profit = getProfit();
+        double percentageChange = getPercentageChange();
 
-        String result = profit >= 0 ? "Gain" : "Loss";
+        String result = percentageChange >= 0 ? "Gain" : "Loss";
+        double profit = getValue() - investedAmount;
 
         getContent();
         System.out.println("-".repeat(60));
         System.out.printf("Invested amount: %.2f$%n", investedAmount);
         System.out.printf("Total portfolio value: %.2f$%n", getValue());
-        System.out.printf("%s: %.2f%%%n", result, profit);
+        System.out.printf("%s: %.2f$ (%s%.2f%%)%n", result, profit, (profit > 0) ? "+" : "", percentageChange);
     }
 
     public Trade getTradeById(int id) {
