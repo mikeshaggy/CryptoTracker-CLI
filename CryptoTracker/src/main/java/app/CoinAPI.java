@@ -6,14 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URI;
 
-public class CoinAPI {
-    private static final String API_KEY = "302F2A7C-47D7-4049-AB47-BB36C318CF27";
+public class CoinAPI implements Serializable {
+    private final String API_KEY = "302F2A7C-47D7-4049-AB47-BB36C318CF27";
 
-    public static String getCoinData(String coinName) throws IOException {
+    private String getCoinData(String coinName) throws IOException {
         String apiUrl = "https://rest.coinapi.io/v1/exchangerate/%s/USD".formatted(coinName);
         URL url = URI.create(apiUrl).toURL();
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
@@ -33,8 +34,7 @@ public class CoinAPI {
         return sb.toString();
     }
 
-    public static double getCoinExchangeRate(String coinName) {
-
+    public double getCoinExchangeRate(String coinName) {
         double exchangeRate = 0;
 
         try {
@@ -51,8 +51,7 @@ public class CoinAPI {
         return exchangeRate;
     }
 
-    private static double round(double value) {
-
+    private double round(double value) {
         long factor = (long) Math.pow(10, 2);
         value = value * factor;
         long tmp = Math.round(value);
