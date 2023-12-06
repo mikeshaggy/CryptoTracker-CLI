@@ -7,51 +7,45 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URI;
 
 public class CoinAPI {
-    private static final String API_KEY = "463013E2-04A2-47F2-800B-6E05DFD22033";
+    private static final String API_KEY = "302F2A7C-47D7-4049-AB47-BB36C318CF27";
 
-    public static String getCoinData(String coinName) {
+    public static String getCoinData(String coinName) throws IOException {
+        String apiUrl = "https://rest.coinapi.io/v1/exchangerate/%s/USD".formatted(coinName);
+        URL url = URI.create(apiUrl).toURL();
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+        connection.setRequestProperty("X-CoinAPI-Key", API_KEY);
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+        String inputLine;
         StringBuilder sb = new StringBuilder();
 
-        try {
-            String apiUrl = "https://rest.coinapi.io/v1/exchangerate/%s/USD".formatted(coinName);
-            URL url = URI.create(apiUrl).toURL();
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setRequestProperty("X-app.CoinAPI-Key", API_KEY);
-
-            BufferedReader br = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-            String input;
-
-            while ((input = br.readLine()) != null) {
-                sb.append(input);
-            }
-
-            br.close();
-            connection.disconnect();
-        } catch (MalformedURLException e) {
-            System.out.println("Caught MalformedURLException");
-        } catch (IOException e) {
-            System.out.println("Caught IOException");
+        while ((inputLine = in.readLine()) != null) {
+            sb.append(inputLine);
         }
+
+        in.close();
+        connection.disconnect();
 
         return sb.toString();
     }
 
     public static double getCoinExchangeRate(String coinName) {
-        String coinData = getCoinData(coinName);
 
         double exchangeRate = 0;
 
         try {
+            String coinData = getCoinData(coinName);
             ObjectMapper mapper = new ObjectMapper();
             JsonNode jsonNode = mapper.readTree(coinData);
             exchangeRate = round(jsonNode.get("rate").asDouble());
         } catch (JsonProcessingException e) {
             System.out.println("Caught JsonProcessingException");
+        } catch (IOException e) {
+            System.out.println("Caught IOException");
         }
 
         return exchangeRate;
