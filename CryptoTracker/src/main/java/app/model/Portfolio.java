@@ -12,9 +12,16 @@ public class Portfolio implements Serializable {
     private final List<Trade> trades = new ArrayList<>();
     private final Map<String, Double> content = new HashMap<>();
     private double investedAmount;
+    private final CoinAPI coinAPI;
 
     public Portfolio(String name) {
         this.name = name;
+        this.coinAPI = new CoinAPI();
+    }
+
+    public Portfolio(String name, CoinAPI coinAPI) {
+        this.name = name;
+        this.coinAPI = coinAPI;
     }
 
     public void addTrade(Trade trade) {
@@ -36,26 +43,15 @@ public class Portfolio implements Serializable {
             }
             return;
         }
-        System.out.println("app.model.Trade list is empty");
+        System.out.println("Trade list is empty");
     }
 
-    private void getContent() {
-        System.out.printf("%-5s | %-5s | %-15s%n", "Coin Name", "Held Quantity", "Estimated Value in USD [$]");
-        for (Map.Entry<String, Double> entry : content.entrySet()) {
-            String coinName = entry.getKey();
-            double coinAmount = entry.getValue();
-            double coinPrice = CoinAPI.getCoinExchangeRate(coinName);
-            double coinValue = coinPrice * coinAmount;
-            System.out.printf("%-9s | %-13.9f | %-15.2f%n", coinName, coinAmount, coinValue);
-        }
-    }
-
-    private double getValue() {
+    public double getValue() {
         double value = 0;
         for (Map.Entry<String, Double> entry : content.entrySet()) {
             String coinName = entry.getKey();
             double coinAmount = entry.getValue();
-            double coinPrice = CoinAPI.getCoinExchangeRate(coinName);
+            double coinPrice = coinAPI.getCoinExchangeRate(coinName);
             value += coinPrice * coinAmount;
         }
 
@@ -79,7 +75,15 @@ public class Portfolio implements Serializable {
         String result = percentageChange >= 0 ? "Gain" : "Loss";
         double profit = getValue() - investedAmount;
 
-        getContent();
+        System.out.printf("%-5s | %-5s | %-15s%n", "Coin Name", "Held Quantity", "Estimated Value in USD [$]");
+        for (Map.Entry<String, Double> entry : content.entrySet()) {
+            String coinName = entry.getKey();
+            double coinAmount = entry.getValue();
+            double coinPrice = coinAPI.getCoinExchangeRate(coinName);
+            double coinValue = coinPrice * coinAmount;
+            System.out.printf("%-9s | %-13.9f | %-15.2f%n", coinName, coinAmount, coinValue);
+        }
+
         System.out.println("-".repeat(60));
         System.out.printf("Invested amount: %.2f$%n", investedAmount);
         System.out.printf("Total portfolio value: %.2f$%n", getValue());
@@ -126,5 +130,21 @@ public class Portfolio implements Serializable {
 
     public String getName() {
         return name;
+    }
+
+    public List<Trade> getTrades() {
+        return trades;
+    }
+
+    public double getInvestedAmount() {
+        return investedAmount;
+    }
+
+    public Map<String, Double> getContent() {
+        return content;
+    }
+
+    public CoinAPI getCoinAPI() {
+        return coinAPI;
     }
 }
