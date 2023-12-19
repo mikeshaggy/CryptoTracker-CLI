@@ -2,6 +2,10 @@
 
 CryptoTracker is a Java-based application designed to manage cryptocurrency portfolios. It allows users to track their trades, view portfolio details, and interact with a user-friendly interface.
 
+## Interactive README
+
+For an interactive version of this README, visit [mikeshaggy.github.io/CryptoTracker-CLI/](https://mikeshaggy.github.io/CryptoTracker-CLI/).
+
 ## Table of Contents
 - [Overview](#overview)
 - [Features](#features)
