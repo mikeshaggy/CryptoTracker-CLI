@@ -2,12 +2,20 @@ package app.model;
 
 import app.CoinAPI;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.assertj.core.api.Assertions.assertThat;
-class PortfolioTest {
-    private CoinAPI coinAPIMock = Mockito.mock(CoinAPI.class);
-    private final Portfolio portfolio = new Portfolio("test", coinAPIMock);
+import static org.mockito.Mockito.when;
+
+@ExtendWith(MockitoExtension.class)
+public class PortfolioTest {
+    @Mock
+    private CoinAPI coinAPI;
+    @InjectMocks
+    private Portfolio portfolio;
 
     @Test
     void shouldAddTrade() {
@@ -38,8 +46,8 @@ class PortfolioTest {
         Trade trade2 = new Trade(coinName2, coinPrice2, coinQuantity2);
         portfolio.addTrade(trade2);
         // WHEN
-        Mockito.when(portfolio.getCoinAPI().getCoinExchangeRate("BTC")).thenReturn(45000.0);
-        Mockito.when(portfolio.getCoinAPI().getCoinExchangeRate("ETH")).thenReturn(2500.0);
+        when(portfolio.getCoinAPI().getCoinExchangeRate("BTC")).thenReturn(45000.0);
+        when(portfolio.getCoinAPI().getCoinExchangeRate("ETH")).thenReturn(2500.0);
         double portfolioValue = portfolio.getValue();
         // THEN
         assertThat(portfolioValue).isEqualTo(45000.0 * 0.0025 + 2500.0 * 0.05);
